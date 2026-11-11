@@ -1,6 +1,10 @@
 //import http module that allows us to create webserver
 //this is the node.js syntax for importing a module
 const http = require('http')
+//import to see files
+const fs = require('fs')
+//import to see file paths
+const path = require('path')
 
 //define our hostname and port - every web server needs a port number and a hostname..if we dont have a hostname we have bought or we are locally developing, we can use our loopback address or localhost
 const HOSTNAME = '127.0.0.1' //local machine ip address
@@ -23,6 +27,24 @@ const server = http.createServer((req, res) =>{
         res.statusCode = 200
         res.setHeader('Content-Type', 'application/json')
         res.end(JSON.stringify({message: 'Hello from the API'}))
+    }
+
+    else if(req.url === '/' && req.method === 'GET'){
+        const filePath = path.join(__dirname, 'index.html')
+
+        //send the html file instead of just text
+        fs.readFile(filePath, (err, content) =>{
+            if (err){
+                res.statusCode = 500
+                res.setHeader('Content-Type', 'text/plain')
+                res.end('Internal Server Error: HTML File Not Found')
+            }
+            else{
+                res.statusCode = 200
+                res.setHeader('Content-Type', 'text/html')
+                res.end(content)
+            }
+        })
     }
 })
 
