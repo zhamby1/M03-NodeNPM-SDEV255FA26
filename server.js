@@ -29,6 +29,8 @@ const server = http.createServer((req, res) =>{
         res.end(JSON.stringify({message: 'Hello from the API'}))
     }
 
+    
+    //to send an html file we need to grab the file and join it to the filepath
     else if(req.url === '/' && req.method === 'GET'){
         const filePath = path.join(__dirname, 'index.html')
 
