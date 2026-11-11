@@ -6,16 +6,24 @@ const http = require('http')
 const HOSTNAME = '127.0.0.1' //local machine ip address
 const PORT = 3000
 
-//create our server
-//we use the http built in method/function createServer
-//all servers must handle requests and responses..you can call them whatever but the http module know that the first two parameters/arguments you use in createServer represent the request and response
+//we can also respond to api calls or json request and send json back
+//we can use something called routes
+//by default our server hostname and port has been establisehd and we can create /other_pages using routes
+//routes are just urls that respond to a request by typing it to a function or code
 const server = http.createServer((req, res) =>{
-    //set the codes we need and the type of data we are sending back
-    res.statusCode = 200 //this is the status code in http for a succesful exchange of request and response
-    res.setHeader('Content-Type', 'text/plain')
-
-    //send the response using the .end function as part of the res in http module.  sends data then closes connection
-    res.end('Hello Again World')
+    //set the server to allow other servers to access data..known as cross origin scripting (CORS)
+    res.setHeader('Access-Control-Allow-Origin', '*')  //* means all
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+    //handle a fetch request GET
+    //we need to establish a url that we like...it can be anything..we will make ours /api/data
+    //we say if req.url equals this url and the http method is GET
+    //we can use the build in url and method functions for req
+    if(req.url === '/api/data' && req.method == 'GET'){
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
+        res.end(JSON.stringify({message: 'Hello from the API'}))
+    }
 })
 
 //tell the server to listen on the port and hostname
