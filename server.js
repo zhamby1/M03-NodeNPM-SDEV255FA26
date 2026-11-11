@@ -13,7 +13,7 @@ const PORT = 3000
 //we can also respond to api calls or json request and send json back
 //we can use something called routes
 //by default our server hostname and port has been establisehd and we can create /other_pages using routes
-//routes are just urls that respond to a request by typing it to a function or code
+//routes are just urls that respond to a request by tying it to a function or code
 const server = http.createServer((req, res) =>{
     //set the server to allow other servers to access data..known as cross origin scripting (CORS)
     res.setHeader('Access-Control-Allow-Origin', '*')  //* means all
